@@ -60,23 +60,94 @@
 // CheckElementOfArray(matrix);
 
 // ================================================================================================
-// Вариант 2. Линейный поиск по массиву
+// Вариант 2. Задается порядковый номер элемента.
+// Вычисление индексов строки и столбца искомого элемента.
 
-void CheckElementOfArray2(int[,] array)
+// void CheckElementOfArray2(int[,] array)
+// {
+//     int n = PromptNumber("Введите порядковый номер искомого элемента в массиве: (1, 2, ...): ");
+//     int columnIndex = n % array.GetLength(1) - 1;   // индекс столбца, в котором находится элемент
+//     int rowIndex = n / array.GetLength(1);          // индекс строки, в которой находится элемент
+//     if (n > array.GetLength(0) * array.GetLength(1))
+//     {
+//         Console.WriteLine("Такого элемента в массиве нет");
+//     }
+//     else if (n % array.GetLength(1) == 0)   // костыль для последнего столбца
+//     {
+//         columnIndex = array.GetLength(1) - 1;
+//         rowIndex = n / array.GetLength(1) - 1;
+//     }
+//     Console.WriteLine($"Искомый элемент равен: {array[rowIndex, columnIndex]}");
+// }
+
+// int PromptNumber(string text)
+// {
+//     Console.Write(text);
+//     return Convert.ToInt32(Console.ReadLine());
+// }
+
+// void PrintArray2D(int[,] array)
+// {
+//     for (int i = 0; i < array.GetLength(0); i++)
+//     {
+//         for (int j = 0; j < array.GetLength(1); j++)
+//         {
+//             Console.Write($"{array[i, j]}\t");
+//         }
+//         Console.WriteLine();
+//     }
+// }
+
+// int[,] GenerateRandomArray2D(int rows, int columns, int from, int to)
+// {
+//     int[,] array = new int[rows, columns];
+//     for (int i = 0; i < array.GetLength(0); i++)
+//     {
+//         for (int j = 0; j < array.GetLength(1); j++)
+//         {
+//             array[i, j] = new Random().Next(from, to);
+//         }
+//     }
+//     return array;
+// }
+
+// int m = PromptNumber("Задайте количество строк массива: ");
+// int n = PromptNumber("Задайте количество столбцов массива: ");
+// int[,] matrix = GenerateRandomArray2D(m, n, 10, 100);
+// Console.WriteLine("Сгенерирован двумерный массив");
+// PrintArray2D(matrix);
+// CheckElementOfArray2(matrix);
+
+// ================================================================================================
+// Вариант 3. Задается порядковый номер элемента.
+// Поэлементный перебор массива через count.
+
+void CheckElementOfArray3(int[,] array)
 {
     int n = PromptNumber("Введите порядковый номер искомого элемента в массиве: (1, 2, ...): ");
-    int columnIndex = n % array.GetLength(1) - 1;   // индекс столбца, в котором находится элемент
-    int rowIndex = n / array.GetLength(1);          // индекс строки, в которой находится элемент
     if (n > array.GetLength(0) * array.GetLength(1))
     {
         Console.WriteLine("Такого элемента в массиве нет");
     }
-    else if (n % array.GetLength(1) == 0)   // костыль для последнего столбцв
+    else
     {
-        columnIndex = array.GetLength(1) - 1;
-        rowIndex = n / array.GetLength(1) - 1;
+        int count2 = 0;
+        for (int i = 0; i < array.GetLength(0); i++)
+        {
+            int count1 = count2;
+            for (int j = 0; j < array.GetLength(1); j++)
+            {
+                // int count1 = count2;
+                count1++;
+                if (count1 == n)
+                {
+                    Console.WriteLine($"Искомый элемент равен: {array[i, j]}");
+                    break;
+                }
+            }
+            count2 = count1;
+        }
     }
-    Console.WriteLine($"Искомый элемент равен: {array[rowIndex, columnIndex]}");
 }
 
 int PromptNumber(string text)
@@ -115,4 +186,4 @@ int n = PromptNumber("Задайте количество столбцов ма�
 int[,] matrix = GenerateRandomArray2D(m, n, 10, 100);
 Console.WriteLine("Сгенерирован двумерный массив");
 PrintArray2D(matrix);
-CheckElementOfArray2(matrix);
+CheckElementOfArray3(matrix);
